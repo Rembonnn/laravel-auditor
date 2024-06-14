@@ -1,0 +1,19 @@
+{
+    "name": "rembon/laravel-auditor",
+    "description": "Laravel Eloquent Model Auditor Without Getting Sweat",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rembon\\LaravelAuditor\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wirandra.rembon",
+            "email": "alayarahman07@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
