@@ -19,3 +19,61 @@ By using Laravel Auditing, you can enhance the transparency and reliability of y
 - Third party integrations (request and response)
 - Discover malicious activities in your applications
 - Debugging purposes
+
+## How to Install
+
+### Step 1: Install the Package via Composer
+Run the following command in your terminal to install the package:
+
+```sh
+composer require rembon/laravel-auditor
+```
+
+### Step 2: Register the Service Provider
+Once the package is successfully installed, you need to register the service provider and publish the assets. Add the service provider to the providers array in `config/app.php`:
+
+```php
+'providers' => [
+    /*
+    * Laravel Framework Service Providers...
+    */
+    ...
+
+    /*
+    * Package Service Providers...
+    */
+    \Rembon\LaravelAuditor\LaravelAuditorServiceProvider::class,
+
+    /*
+    * Application Service Providers...
+    */
+    ...
+],
+```
+
+### Step 3: Publish the Configuration
+Run the following Artisan commands to publish the package configuration:
+
+```sh
+php artisan vendor:publish --tag=config
+```
+
+```sh
+php artisan vendor:publish --tag=migrations
+```
+
+### Step 4: Optional Commands
+Lastly, run the following optional commands:
+
+```sh
+php artisan composer:dump-autoload
+```
+
+```sh
+php artisan optimize:clear
+```
+
+## Credits
+- [Rembon Karya Digital](https://github.com/rembonnn)
+- [DayCod](https://github.com/dayCod)
+- [See All Contributors](https://github.com/rembonnn/sync-collection/contributors)
