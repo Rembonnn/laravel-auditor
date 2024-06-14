@@ -51,7 +51,17 @@ Once the package is successfully installed, you need to register the service pro
 ],
 ```
 
-Replace these code into `app/Providers/EventServiceProvider.php`
+Use these library on top of your files:
+```php
+<?php
+
+use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Notifications\Events\NotificationSent;
+use Rembon\LaravelAuditor\Listeners\AuthorizeMail;
+use Rembon\LaravelAuditor\Listeners\AuthorizeNotification;
+```
+
+Then replace these code into `app/Providers/EventServiceProvider.php`
 ```php
 protected $listen = [
     ...
@@ -62,14 +72,6 @@ protected $listen = [
         AuthorizeNotification::class,
     ],
 ];
-```
-and use these library on top of your files:
-```php
-<?php
-use Illuminate\Mail\Events\MessageSent;
-use Illuminate\Notifications\Events\NotificationSent;
-use Rembon\LaravelAuditor\Listeners\AuthorizeMail;
-use Rembon\LaravelAuditor\Listeners\AuthorizeNotification;
 ```
 
 ### Step 3: Publish the Configuration
