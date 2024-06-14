@@ -100,6 +100,23 @@ php artisan composer:dump-autoload
 php artisan optimize:clear
 ```
 
+## How to Use ?
+Simple, Just put our Auditable Traits into your models
+
+```php
+<?php
+
+use Rembon\LaravelAuditor\Traits\Auditable;
+
+class User extends Authenticatable
+{
+    use ..., Auditable;
+    
+    ...
+}
+
+```
+
 ## Credits
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)
