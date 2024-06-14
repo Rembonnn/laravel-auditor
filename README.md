@@ -12,4 +12,10 @@ By using Laravel Auditing, you can enhance the transparency and reliability of y
 - Keeping track of user actions
 - Keeping track of what the user sees
 - Keeping track of system changes
-- Keeping track of databases changes
+- Keeping track of databases 
+
+## When to use Laravel Auditor ?
+- Keeping track of user actions (responsibility)
+- Third party integrations (request and response)
+- Discover malicious activities in your applications
+- Debugging purposes
