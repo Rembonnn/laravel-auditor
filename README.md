@@ -51,10 +51,11 @@ Once the package is successfully installed, you need to register the service pro
 ],
 ```
 
-Use these library on top of your files:
+Use these library on top of your Event Service Provider Files `app/Providers/EventServiceProvider.php`:
 ```php
 <?php
 
+...
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Notifications\Events\NotificationSent;
 use Rembon\LaravelAuditor\Listeners\AuthorizeMail;
