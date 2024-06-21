@@ -32,6 +32,10 @@ class LaravelAuditorServiceProvider extends ServiceProvider
     {
         $router->pushMiddlewareToGroup('web', AuditRequest::class);
 
+        $this->loadRoutesFrom(__DIR__. '/Routes/web.php');
+
+        $this->loadViewsFrom(__DIR__. '/Views/', 'auditor');
+
         $this->loadMigrationsFrom(__DIR__.'/Database/Migrations/');
 
         $this->publishes([
@@ -41,6 +45,10 @@ class LaravelAuditorServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Config/laravel-auditor.php' => config_path('laravel-auditor.php'),
         ], 'config');
+
+        $this->publishes([
+            __DIR__. '/Views' => resource_path('views/vendor/auditor'),
+        ], 'views');
 
         Gate::define('auth:check', function (User $user) {
             return Auth::check();
