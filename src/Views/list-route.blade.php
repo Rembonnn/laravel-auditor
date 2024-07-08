@@ -11,7 +11,7 @@
                     <ul class="space-y-2">
                         <li class="w-full flex gap-2">
                             <i class="fa-home"></i>
-                            <a href="#" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">Dashboard</a>
+                            <a href="{{ route('auditor.index') }}" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">Dashboard</a>
                         </li>
                         <li class="w-full flex gap-2">
                             <i class="fas-fa-computer"></i>
@@ -19,15 +19,15 @@
                         </li>
                         <li class="w-full flex gap-2">
                             <i class="fas-fa-table"></i>
-                            <a href="#" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">List Model</a>
+                            <a href="{{ route('auditor.listmodel') }}" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">List Model</a>
                         </li>
                         <li class="w-full flex gap-2">
                             <i class="fas-fa-table"></i>
-                            <a href="#" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">List Route</a>
+                            <a href="{{ route('auditor.listroute') }}" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">List Route</a>
                         </li>
                         <li class="w-full flex gap-2">
                             <i class="fas-fa-table"></i>
-                            <a href="#" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">List Migration</a>
+                            <a href="{{ route('auditor.listmigration') }}" class="w-full text-gray-800 hover:text-gray-400 p-2 rounded md:text-lg text-sm">List Migration</a>
                         </li>
                     </ul>
                 </div>
