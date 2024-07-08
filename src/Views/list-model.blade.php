@@ -9,9 +9,6 @@
         <x-sidebar />
             <div class="container mx-auto">
                 <div class="rounded-lg shadow p-6">
-                    <div class="w-full mb-2 bg-white px-5 py-2">
-                        <h1 class="text-2xl font-bold mb-4">Overview</h1>
-                    </div>
                     <x-overview />
                     <div class="mb-4">
                         <h2 class="text-lg font-semibold mb-2">Current Workload</h2>
