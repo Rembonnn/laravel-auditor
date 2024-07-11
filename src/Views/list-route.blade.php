@@ -10,35 +10,18 @@
         <div class="container mx-auto">
                 <div class="rounded-lg shadow p-6">
                     <x-overview />
-                    <div class="mb-4">
-                        <h2 class="text-lg font-semibold mb-2">Current Workload</h2>
-                        <div class="bg-white rounded-lg shadow p-4">
-                            <table class="w-full">
-                                <thead>
-                                    <tr>
-                                        <th class="py-2 px-4 text-left">Queue</th>
-                                        <th class="py-2 px-4 text-left">Jobs</th>
-                                        <th class="py-2 px-4 text-left">Processes</th>
-                                        <th class="py-2 px-4 text-left">Wait</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="py-2 px-4">default</td>
-                                        <td class="py-2 px-4">200</td>
-                                        <td class="py-2 px-4">2</td>
-                                        <td class="py-2 px-4">A few seconds</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 px-4">nunomadurohome-xaZQ</td>
-                                        <td class="py-2 px-4"></td>
-                                        <td class="py-2 px-4"></td>
-                                        <td class="py-2 px-4"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <x-data-table 
+                        :id="'users-table'" 
+                        :title="'DataTables'" 
+                        :columns="['No', 'Name', 'Email', 'Action']" 
+                        :ajax-url="route('auditor.getMonitoringData')"
+                        :column-defs="[
+                            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex'],
+                            ['data' => 'name', 'name' => 'name'],
+                            ['data' => 'email', 'name' => 'email'],
+                            ['data' => 'action', 'name' => 'action', 'orderable' => false, 'searchable' => false],
+                        ]"
+                    />
                 </div>
             </div>
         </div>
