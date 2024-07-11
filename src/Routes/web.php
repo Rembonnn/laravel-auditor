@@ -9,4 +9,5 @@ Route::group(['prefix' => 'auditor', 'as' => 'auditor.'], function () {
     Route::get('/listmodel', [AuditorController::class, 'listmodel'])->name('listmodel');
     Route::get('/listroute', [AuditorController::class, 'listroute'])->name('listroute');
     Route::get('/listmigration', [AuditorController::class, 'listmigration'])->name('listmigration');
+    Route::get('get-monitoring-data', [AuditorController::class, 'getMonitoringData'])->name('getMonitoringData');
 });
