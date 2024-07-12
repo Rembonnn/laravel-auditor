@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('auditor.monitoring') }}" class="flex items-center p-2 rounded-lg {{ request()->routeIs('auditor.monitoring') ? 'bg-gray-100 text-violet-700' : 'text-gray-500 rounded-lg hover:bg-gray-100 hover:text-violet-700' }}">
+                <a href="{{ route('auditor.monitoring.index') }}" class="flex items-center p-2 rounded-lg {{ request()->routeIs('auditor.monitoring.*') ? 'bg-gray-100 text-violet-700' : 'text-gray-500 rounded-lg hover:bg-gray-100 hover:text-violet-700' }}">
                     <svg class="w-5 h-5 hover:text-violet-700 transition duration-75 "
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">

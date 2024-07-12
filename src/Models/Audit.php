@@ -29,6 +29,7 @@ class Audit extends Model
         'emails' => 'collection',
         'models' => 'collection',
         'notifications' => 'collection',
+        'properties' => 'collection',
     ];
 
     /**
