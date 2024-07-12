@@ -47,6 +47,10 @@ class LaravelAuditorServiceProvider extends ServiceProvider
         ], 'config');
 
         $this->publishes([
+            __DIR__ . '/../dist/assets' => public_path('vendor/laravel-crud-generator')
+        ], 'public');
+
+        $this->publishes([
             __DIR__. '/Views' => resource_path('views/vendor/auditor'),
         ], 'views');
 

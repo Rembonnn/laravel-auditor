@@ -6,14 +6,14 @@
             <h1 class="text-3xl font-bold">Laravel Auditor | Monitoring</h1>
         </div>
         <div class="md:grid md:grid-cols-[1fr_5fr] flex flex-col">
-        <x-sidebar />
+        <x-auditor::sidebar />
             <div class="container mx-auto">
                 <div class="rounded-lg shadow p-6">
-                    <x-overview />
-                    <x-data-table 
-                        :id="'users-table'" 
-                        :title="'DataTables'" 
-                        :columns="['No', 'Name', 'Email', 'Action']" 
+                    <x-auditor::overview />
+                    <x-auditor::data-table
+                        :id="'users-table'"
+                        :title="'DataTables'"
+                        :columns="['No', 'Name', 'Email', 'Action']"
                         :ajax-url="route('auditor.getMonitoringData')"
                         :column-defs="[
                             ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex'],

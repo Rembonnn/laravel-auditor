@@ -2,8 +2,8 @@
 
 namespace Rembon\LaravelAuditor\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class AuditorController extends BaseController
@@ -13,22 +13,22 @@ class AuditorController extends BaseController
         return view('auditor::index');
     }
 
-    public function monitoring(): View 
+    public function monitoring(): View
     {
         return view('auditor::monitoring');
     }
 
-    public function listmodel(): View 
+    public function listmodel(): View
     {
         return view('auditor::list-model');
     }
 
-    public function listroute(): View 
+    public function listroute(): View
     {
         return view('auditor::list-route');
     }
 
-    public function listmigration(): View 
+    public function listmigration(): View
     {
         return view('auditor::list-migration');
     }

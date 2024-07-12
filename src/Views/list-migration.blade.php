@@ -9,7 +9,7 @@
         <x-sidebar />
             <div class="container mx-auto">
                 <div class="rounded-lg shadow p-6">
-                    <x-overview />
+                    <x-auditor::overview />
                     <div class="mb-4">
                         <h2 class="text-lg font-semibold mb-2">Current Workload</h2>
                         <div class="bg-white rounded-lg shadow p-4">
