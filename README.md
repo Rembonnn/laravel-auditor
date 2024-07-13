@@ -87,6 +87,10 @@ php artisan vendor:publish --tag=migrations
 ```
 
 ```sh
+php artisan vendor:publish --tag=public
+```
+
+```sh
 php artisan migrate --path=database/migrations/2024_06_14_042948_create_audits_table.php
 ```
 

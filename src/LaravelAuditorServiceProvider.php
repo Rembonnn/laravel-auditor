@@ -34,9 +34,6 @@ class LaravelAuditorServiceProvider extends ServiceProvider
      */
     public function boot(Router $router, HttpKernel $kernel): void
     {
-        $router->pushMiddlewareToGroup('web', AuditRequest::class);
-        $kernel->pushMiddleware(PerformanceMetrics::class);
-
         $this->loadRoutesFrom(__DIR__. '/Routes/web.php');
 
         $this->loadViewsFrom(__DIR__. '/Views/', 'auditor');
@@ -62,5 +59,9 @@ class LaravelAuditorServiceProvider extends ServiceProvider
         Gate::define('auth:check', function (User $user) {
             return Auth::check();
         });
+
+        $router->pushMiddlewareToGroup('web', AuditRequest::class);
+
+        if (config('laravel-auditor.performance_metrics')) $kernel->pushMiddleware(PerformanceMetrics::class);
     }
 }

@@ -10,8 +10,12 @@
     },
     "authors": [
         {
-            "name": "wirandra.rembon",
+            "name": "dayCod",
             "email": "alayarahman07@gmail.com"
+        },
+        {
+            "name": "Ade Yusuf",
+            "email": "adeyusuf005@gmail.com"
         }
     ],
     "minimum-stability": "dev",

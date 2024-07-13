@@ -2,7 +2,6 @@
 
 namespace Rembon\LaravelAuditor\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +36,9 @@ class Audit extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(
+            related: config('laravel-auditor.user_model'),
+            ownerKey: config('laravel-auditor.user_owner_key'),
+        );
     }
 }
