@@ -17,6 +17,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('vendor/laravel-crud-generator/css/index.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         * {

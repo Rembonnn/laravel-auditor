@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Rembon\LaravelAuditor\Models\Audit;
+use Rembon\LaravelAuditor\Models\Performance;
 use Rembon\LaravelAuditor\Services\DataTableService;
 
 class AuditorController extends BaseController
@@ -45,7 +46,9 @@ class AuditorController extends BaseController
 
         ];
 
-        return view('auditor::index', compact('stats'));
+        $performanceData = Performance::all();
+
+        return view('auditor::index', compact('stats', 'performanceData'));
     }
 
     /**

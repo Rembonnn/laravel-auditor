@@ -10,6 +10,8 @@ use Illuminate\Support\ServiceProvider;
 use Rembon\LaravelAuditor\Contracts\Auditor;
 use Rembon\LaravelAuditor\Services\AuditorService;
 use Rembon\LaravelAuditor\Http\Middleware\AuditRequest;
+use Rembon\LaravelAuditor\Http\Middleware\PerformanceMetrics;
+use Illuminate\Contracts\Http\Kernel as HttpKernel;
 
 class LaravelAuditorServiceProvider extends ServiceProvider
 {
@@ -26,11 +28,14 @@ class LaravelAuditorServiceProvider extends ServiceProvider
     }
 
     /**
+     * @param Router $router
+     * @param HttpKernel $kernel
      * @return void
      */
-    public function boot(Router $router): void
+    public function boot(Router $router, HttpKernel $kernel): void
     {
         $router->pushMiddlewareToGroup('web', AuditRequest::class);
+        $kernel->pushMiddleware(PerformanceMetrics::class);
 
         $this->loadRoutesFrom(__DIR__. '/Routes/web.php');
 
