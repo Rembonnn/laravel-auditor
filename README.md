@@ -125,4 +125,5 @@ class User extends Authenticatable
 ## Credits
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)
+- [Ade Yusuf](https://github.com/adeyusuf211)
 - [See All Contributors](https://github.com/rembonnn/sync-collection/contributors)
