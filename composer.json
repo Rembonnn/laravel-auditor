@@ -3,6 +3,7 @@
     "description": "Laravel Eloquent Model Auditor Without Getting Sweat",
     "type": "library",
     "license": "MIT",
+    "version": "v2.0.0",
     "autoload": {
         "psr-4": {
             "Rembon\\LaravelAuditor\\": "src/"
