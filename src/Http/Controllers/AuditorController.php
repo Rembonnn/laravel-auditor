@@ -11,17 +11,36 @@ use Rembon\LaravelAuditor\Services\DataTableService;
 
 class AuditorController extends BaseController
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         return view('auditor::index');
     }
 
+    /**
+     * @return View
+     */
     public function monitoringIndexView(): View
     {
         return view('auditor::monitoring.index');
     }
 
-    public function monitoringIndexData(Request $request)
+    /**
+     * @return View
+     */
+    public function monitoringDetailView(string|array|int $key): View
+    {
+        $auditorData = Audit::find($key);
+
+        return view('auditor::monitoring.detail', compact('auditorData'));
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function monitoringIndexData(Request $request): JsonResponse
     {
         if ($request->ajax()) {
 
@@ -31,20 +50,39 @@ class AuditorController extends BaseController
 
             return (new DataTableService())
                 ->setCustomableField($customableField)
-                ->setupDataTables(Audit::orderBy('created_at', 'desc')->get(), ['view' => route('auditor.monitoring.detail', 'key')]);
+                ->setupDataTables(Audit::orderBy('created_at', 'desc')->get(), [
+                    'view' => route('auditor.monitoring.detail', 'key')
+                ]);
         }
     }
 
-    public function monitoringDetailView(string|array|int $key): View
+    /**
+     * @return View
+     */
+    public function modelIndexView(): View
     {
-        $auditorData = Audit::find($key);
-
-        return view('auditor::monitoring.detail', compact('auditorData'));
+        return view('auditor::model.index');
     }
 
-    public function listmodel(): View
+    /**
+     * @return JsonResponse
+     */
+    public function modelIndexData(Request $request): JsonResponse
     {
-        return view('auditor::list-model');
+        if ($request->ajax()) {
+
+            $data = collect($this->getAllModels())
+                ->map(fn ($modelName) =>
+                    array(
+                        'model_classname' => "App/Models/$modelName::class",
+                        'model_name' => $modelName,
+                        'guard_name' => config('auth.defaults.guard')
+                    )
+                );
+
+            return (new DataTableService())
+                ->setupDataTables($data);
+        }
     }
 
     public function listroute(): View
