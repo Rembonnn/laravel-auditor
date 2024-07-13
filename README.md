@@ -126,4 +126,4 @@ class User extends Authenticatable
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)
 - [Ade Yusuf](https://github.com/adeyusuf211)
-- [See All Contributors](https://github.com/rembonnn/sync-collection/contributors)
+- [See All Contributors](https://github.com/rembonnn/laravel-auditor/contributors)
