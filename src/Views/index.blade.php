@@ -53,8 +53,8 @@
     </div>
 
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow mt-10">
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-700">Performance Metrics</h5>
-        <canvas id="performanceChart"></canvas>
+        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-700">Today Performance Metrics</h5>
+        <canvas class="w-full" id="performanceChart" width="400" height="200"></canvas>
     </div>
     <script>
         var ctx = document.getElementById('performanceChart').getContext('2d');
@@ -64,19 +64,19 @@
             data: {
                 labels: @json($performanceData->pluck('timestamp')),
                 datasets: [{
-                        label: 'Response Time',
+                        label: 'Response Time (ms)',
                         data: @json($performanceData->pluck('response_time')),
                         borderColor: 'rgba(75, 192, 192, 1)',
                         fill: false
                     },
                     {
-                        label: 'CPU Usage',
+                        label: 'CPU Usage (%)',
                         data: @json($performanceData->pluck('cpu_usage')),
                         borderColor: 'rgba(54, 162, 235, 1)',
                         fill: false
                     },
                     {
-                        label: 'Memory Usage',
+                        label: 'Memory Usage (MB)',
                         data: @json($performanceData->pluck('memory_usage')),
                         borderColor: 'rgba(153, 102, 255, 1)',
                         fill: false
