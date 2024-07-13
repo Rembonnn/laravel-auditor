@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Rembon\LaravelAuditor\Http\Controllers\AuditorController;
 
 Route::group(['prefix' => 'auditor', 'as' => 'auditor.'], function () {
+
     Route::get('/', [AuditorController::class, 'index'])->name('index');
 
     Route::group(['prefix' => 'monitoring', 'as' => 'monitoring.'], function () {
@@ -23,5 +24,8 @@ Route::group(['prefix' => 'auditor', 'as' => 'auditor.'], function () {
         Route::get('/{key}/show', [AuditorController::class, 'migrationDetailView'])->name('detail');
     });
 
-    Route::get('/listroute', [AuditorController::class, 'listroute'])->name('listroute');
+    Route::group(['prefix' => 'route', 'as' => 'route.'], function () {
+        Route::get('/', [AuditorController::class, 'routeIndexView'])->name('index');
+        Route::get('/data', [AuditorController::class, 'routeIndexData'])->name('data');
+    });
 });

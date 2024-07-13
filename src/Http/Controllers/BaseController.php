@@ -4,6 +4,7 @@ namespace Rembon\LaravelAuditor\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 
 class BaseController extends Controller
 {
@@ -58,5 +59,24 @@ class BaseController extends Controller
         }
 
         return $columns;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllRouteList(): array
+    {
+        $routes = Route::getRoutes();
+        $routeList = [];
+
+        foreach ($routes as $route) {
+            $routeList[] = [
+                'method' => implode('|', $route->methods()),
+                'uri' => $route->uri(),
+                'name' => $route->getName(),
+            ];
+        }
+
+        return $routeList;
     }
 }

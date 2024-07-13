@@ -127,8 +127,26 @@ class AuditorController extends BaseController
         return view('auditor::migration.detail', compact('migrationName', 'migrationDetail', 'migrationPath'));
     }
 
-    public function listroute(): View
+    /**
+     * @return View
+     */
+    public function routeIndexView(): View
     {
-        return view('auditor::list-route');
+        return view('auditor::route.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function routeIndexData(Request $request): JsonResponse
+    {
+        if ($request->ajax()) {
+
+            $data = collect($this->getAllRouteList());
+
+            return (new DataTableService())
+                ->setupDataTables($data);
+        }
     }
 }
