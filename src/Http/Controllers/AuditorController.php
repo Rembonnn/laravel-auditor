@@ -28,6 +28,7 @@ class AuditorController extends BaseController
     }
 
     /**
+     * @param string|array|int $key
      * @return View
      */
     public function monitoringDetailView(string|array|int $key): View
@@ -38,6 +39,7 @@ class AuditorController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
     public function monitoringIndexData(Request $request): JsonResponse
@@ -65,6 +67,7 @@ class AuditorController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
     public function modelIndexData(Request $request): JsonResponse
@@ -85,13 +88,47 @@ class AuditorController extends BaseController
         }
     }
 
+    /**
+     * @return View
+     */
+    public function migrationIndexView(): View
+    {
+        return view('auditor::migration.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function migrationIndexData(Request $request): JsonResponse
+    {
+        if ($request->ajax()) {
+
+            $data = \Illuminate\Support\Facades\DB::table('migrations')->orderBy('id', 'desc')->get();
+
+            return (new DataTableService())
+                ->setupDataTables($data, [
+                    'view' => route('auditor.migration.detail', 'key'),
+                    'viewKey' => 'migration'
+                ]);
+        }
+    }
+
+    /**
+     * @param string|array|int $key
+     * @return View
+     */
+    public function migrationDetailView(string|array|int $key): View
+    {
+        $migrationName = $key;
+        $migrationPath = "./database/migrations/$migrationName";
+        $migrationDetail = $this->accessMigrationData($migrationName.'.php');
+
+        return view('auditor::migration.detail', compact('migrationName', 'migrationDetail', 'migrationPath'));
+    }
+
     public function listroute(): View
     {
         return view('auditor::list-route');
-    }
-
-    public function listmigration(): View
-    {
-        return view('auditor::list-migration');
     }
 }

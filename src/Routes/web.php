@@ -17,7 +17,11 @@ Route::group(['prefix' => 'auditor', 'as' => 'auditor.'], function () {
         Route::get('/data', [AuditorController::class, 'modelIndexData'])->name('data');
     });
 
-    Route::get('/listmodel', [AuditorController::class, 'listmodel'])->name('listmodel');
+    Route::group(['prefix' => 'migraton', 'as' => 'migration.'], function () {
+        Route::get('/', [AuditorController::class, 'migrationIndexView'])->name('index');
+        Route::get('/data', [AuditorController::class, 'migrationIndexData'])->name('data');
+        Route::get('/{key}/show', [AuditorController::class, 'migrationDetailView'])->name('detail');
+    });
+
     Route::get('/listroute', [AuditorController::class, 'listroute'])->name('listroute');
-    Route::get('/listmigration', [AuditorController::class, 'listmigration'])->name('listmigration');
 });

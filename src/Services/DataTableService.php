@@ -22,7 +22,8 @@ class DataTableService
             ->addIndexColumn()
             ->addColumn('action', function ($row) use ($actionUrl) {
                 if (!empty($actionUrl)) {
-                    $viewUrl = str_replace('key', $row->id, $actionUrl['view']);
+                    $viewKey = isset($actionUrl['viewKey']) ? $row->{$actionUrl['viewKey']} : $row->id;
+                    $viewUrl = str_replace('key', $viewKey, $actionUrl['view']);
 
                     $actionButton = '<a href="'.$viewUrl.'" class="text-emerald-700 hover:text-white border border-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center me-2 mb-2">View</a>';
 

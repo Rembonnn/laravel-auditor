@@ -3,10 +3,14 @@
 namespace Rembon\LaravelAuditor\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class BaseController extends Controller
 {
-    public function getAllModels()
+    /**
+     * @return array
+     */
+    public function getAllModels(): array
     {
         $modelList = [];
         $path = app_path() . "/Models";
@@ -23,5 +27,36 @@ class BaseController extends Controller
         }
 
         return $modelList;
+    }
+
+    /**
+     * @param string $filename
+     * @return array
+     */
+    public function accessMigrationData(string $filename): array
+    {
+        $filePath = database_path('migrations/' . $filename);
+
+        if (!File::exists($filePath)) return [];
+
+        $fileContent = File::get($filePath);
+        preg_match_all('/\$table->(\w+)\(([^)]+)\)/', $fileContent, $matches, PREG_SET_ORDER);
+
+        $columns = [];
+        foreach ($matches as $match) {
+            $type = $match[1];
+            $params = str_getcsv($match[2]);
+            $name = trim($params[0], "'");
+
+            $column = [
+                'name' => $name,
+                'type' => $type,
+                'length' => isset($params[1]) ? $params[1] : null,
+            ];
+
+            $columns[] = $column;
+        }
+
+        return $columns;
     }
 }
