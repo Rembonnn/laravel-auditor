@@ -16,7 +16,36 @@ class AuditorController extends BaseController
      */
     public function index(): View
     {
-        return view('auditor::index');
+        $stats = [
+
+            'today_activity' => [
+                'count' => Audit::whereDay('created_at', now()->format('d'))->count(),
+                'url' => route('auditor.monitoring.index', ['d' => now()->format('d')])
+            ],
+
+            'total_activity' => [
+                'count' => Audit::count(),
+                'url' => route('auditor.monitoring.index')
+            ],
+
+            'total_model' => [
+                'count' => count($this->getAllModels()),
+                'url' => route('auditor.model.index')
+            ],
+
+            'total_migration' => [
+                'count' => \Illuminate\Support\Facades\DB::table('migrations')->count(),
+                'url' => route('auditor.migration.index')
+            ],
+
+            'total_route' => [
+                'count' => count($this->getAllRouteList()),
+                'url' => route('auditor.route.index')
+            ]
+
+        ];
+
+        return view('auditor::index', compact('stats'));
     }
 
     /**
