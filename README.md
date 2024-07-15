@@ -91,15 +91,11 @@ and
 php artisan migrate --path=database/migrations/2050_07_13_093233_create_performances_table.php
 ```
 
-### Step 4: `Optional` Commands
+### Step 5: `Optional` Commands
 Lastly, run the following optional commands:
 
 ```sh
 php artisan composer:dump-autoload
-```
-
-```sh
-php artisan optimize:clear
 ```
 
 ## How to Use ?
