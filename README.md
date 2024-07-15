@@ -94,6 +94,10 @@ php artisan vendor:publish --tag=public
 php artisan migrate --path=database/migrations/2024_06_14_042948_create_audits_table.php
 ```
 
+```sh
+php artisan migrate --path=database/migrations/2024_07_13_093233_create_performances_table.php
+```
+
 ### Step 4: Optional Commands
 Lastly, run the following optional commands:
 
