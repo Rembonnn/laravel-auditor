@@ -86,12 +86,12 @@ php artisan vendor:publish --tag=views
 ```
 
 ### Step 4: Running the Migration Files
-If you installed a fresh Laravel project and haven't done the first migration, then run:
+then run the migration:
 ```sh
 php artisan migrate
 ```
 
-if you have done the command below:
+if you want to migrate the specific migration, run migration below:
 ```sh
 php artisan migrate --path=database/migrations/2050_06_14_042948_create_audits_table.php
 ```
