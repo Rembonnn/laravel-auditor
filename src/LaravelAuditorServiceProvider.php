@@ -41,20 +41,15 @@ class LaravelAuditorServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/Database/Migrations/');
 
         $this->publishes([
-            __DIR__.'/Database/Migrations/' => database_path('migrations')
+
         ], 'migrations');
 
         $this->publishes([
             __DIR__.'/Config/laravel-auditor.php' => config_path('laravel-auditor.php'),
-        ], 'config');
-
-        $this->publishes([
-            __DIR__ . '/../dist/assets' => public_path('vendor/laravel-crud-generator')
-        ], 'public');
-
-        $this->publishes([
+            __DIR__.'/Database/Migrations/' => database_path('migrations'),
+            __DIR__ . '/../dist/assets' => public_path('vendor/laravel-auditor'),
             __DIR__. '/Views' => resource_path('views/vendor/auditor'),
-        ], 'views');
+        ], 'config');
 
         Gate::define('auth:check', function (User $user) {
             return Auth::check();

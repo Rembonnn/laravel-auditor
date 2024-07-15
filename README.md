@@ -75,27 +75,11 @@ protected $listen = [
 ];
 ```
 
-### Step 3: Publish the Configuration & Migrate the Database Migration
+### Step 3: Publish the Configuration Files & Migrate the Database Migration
 Run the following Artisan commands to publish the package configuration:
 
 ```sh
 php artisan vendor:publish --tag=config
-```
-
-```sh
-php artisan vendor:publish --tag=migrations
-```
-
-```sh
-php artisan vendor:publish --tag=public
-```
-
-```sh
-php artisan migrate --path=database/migrations/2024_06_14_042948_create_audits_table.php
-```
-
-```sh
-php artisan migrate --path=database/migrations/2024_07_13_093233_create_performances_table.php
 ```
 
 ### Step 4: Optional Commands
