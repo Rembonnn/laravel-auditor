@@ -80,6 +80,9 @@ Run the following Artisan commands to publish the package configuration:
 
 ```sh
 php artisan vendor:publish --tag=config
+php artisan vendor:publish --tag=migration
+php artisan vendor:publish --tag=public
+php artisan vendor:publish --tag=view
 ```
 
 ### Step 4: Running the Migration Files
