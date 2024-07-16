@@ -142,6 +142,8 @@ class User extends Authenticatable
 
 ```
 
+Check the view on: `/auditor`
+
 ## Credits
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)
