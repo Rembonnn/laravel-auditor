@@ -107,6 +107,24 @@ Lastly, run the following optional commands:
 composer dump-autoload
 ```
 
+if you are using uuid, just check these file `..._create_audits_table.php` below:
+```php
+Schema::create('audits', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->nullable(); // modify this line into foreignUuid method, do not change the column name
+    $table->string('url');
+    $table->dateTime('datetime');
+    $table->double('request_time');
+    $table->string('route')->nullable();
+    $table->json('abilities')->nullable();
+    $table->json('emails')->nullable();
+    $table->json('models')->nullable();
+    $table->json('notifications')->nullable();
+    $table->json('properties')->nullable();
+    $table->timestamps();
+});
+```
+
 ## How to Use ?
 Simple, Just put our Auditable Traits into your models
 
