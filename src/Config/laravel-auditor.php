@@ -11,7 +11,7 @@ return [
     | or false to disable it. This allows you to control
     | whether metrics are recorded for monitoring purposes.
     */
-    'performance_metrics' => env('AUDITOR_ENABLE_PERFORMANCE', true),
+    'performance_metrics' => env(key: 'AUDITOR_ENABLE_PERFORMANCE', default: true),
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
     | or false to disable them. This controls the visibility
     | of auditor-related data in the application.
     */
-    'views' => env('AUDITOR_ENABLE_VIEWS', true),
+    'views' => env(key: 'AUDITOR_ENABLE_VIEWS', default: true),
 
     /*
     |--------------------------------------------------------------------------

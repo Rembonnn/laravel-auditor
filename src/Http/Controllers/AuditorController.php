@@ -4,6 +4,7 @@ namespace Rembon\LaravelAuditor\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Rembon\LaravelAuditor\Models\Audit;
@@ -20,35 +21,35 @@ class AuditorController extends BaseController
         $stats = [
 
             'today_activity' => [
-                'count' => Audit::whereDay('created_at', now()->format('d'))->count(),
-                'url' => route('auditor.monitoring.index', ['d' => now()->format('d')])
+                'count' => Audit::whereDay(column: 'created_at', operator: now()->format('d'))->count(),
+                'url' => route(name: 'auditor.monitoring.index', parameters: ['d' => now()->format('d')])
             ],
 
             'total_activity' => [
                 'count' => Audit::count(),
-                'url' => route('auditor.monitoring.index')
+                'url' => route(name: 'auditor.monitoring.index')
             ],
 
             'total_model' => [
-                'count' => count($this->getAllModels()),
-                'url' => route('auditor.model.index')
+                'count' => count(value: $this->getAllModels()),
+                'url' => route(name: 'auditor.model.index')
             ],
 
             'total_migration' => [
                 'count' => \Illuminate\Support\Facades\DB::table('migrations')->count(),
-                'url' => route('auditor.migration.index')
+                'url' => route(name: 'auditor.migration.index')
             ],
 
             'total_route' => [
-                'count' => count($this->getAllRouteList()),
-                'url' => route('auditor.route.index')
+                'count' => count(value: $this->getAllRouteList()),
+                'url' => route(name: 'auditor.route.index')
             ]
 
         ];
 
         $performanceData = Performance::all();
 
-        return view('auditor::index', compact('stats', 'performanceData'));
+        return view(view: 'auditor::index', data: compact('stats', 'performanceData'));
     }
 
     /**
@@ -56,7 +57,7 @@ class AuditorController extends BaseController
      */
     public function monitoringIndexView(): View
     {
-        return view('auditor::monitoring.index');
+        return view(view: 'auditor::monitoring.index');
     }
 
     /**
@@ -67,7 +68,7 @@ class AuditorController extends BaseController
     {
         $auditorData = Audit::find($key);
 
-        return view('auditor::monitoring.detail', compact('auditorData'));
+        return view(view: 'auditor::monitoring.detail', data: compact('auditorData'));
     }
 
     /**
@@ -80,16 +81,16 @@ class AuditorController extends BaseController
             ['field' => 'request_time', 'format' => fn ($time) => sprintf("%.2f", $time).'s']
         ];
 
-        $monitoringData = Audit::orderBy('created_at', 'desc')
-            ->when($request->has('d'), function ($query) use ($request) {
-                return $query->whereDay('created_at', $request->get('d'));
+        $monitoringData = Audit::orderBy(column: 'created_at', direction: 'desc')
+            ->when(value: $request->has('d'), callback: function ($query) use ($request): Builder {
+                return $query->whereDay(column: 'created_at', operator: $request->get('d'));
             })
             ->get();
 
         return (new DataTableService())
-            ->setCustomableField($customableField)
-            ->setupDataTables($monitoringData, [
-                'view' => route('auditor.monitoring.detail', 'key')
+            ->setCustomableField(fields: $customableField)
+            ->setupDataTables(data: $monitoringData, actionUrl: [
+                'view' => route(name: 'auditor.monitoring.detail', parameters: 'key')
             ]);
     }
 
@@ -98,7 +99,7 @@ class AuditorController extends BaseController
      */
     public function modelIndexView(): View
     {
-        return view('auditor::model.index');
+        return view(view: 'auditor::model.index');
     }
 
     /**
@@ -110,7 +111,7 @@ class AuditorController extends BaseController
         if ($request->ajax()) {
 
             $data = collect($this->getAllModels())
-                ->map(fn ($modelName) =>
+                ->map(callback: fn ($modelName): array =>
                     array(
                         'model_classname' => "App/Models/$modelName::class",
                         'model_name' => $modelName,
@@ -119,7 +120,7 @@ class AuditorController extends BaseController
                 );
 
             return (new DataTableService())
-                ->setupDataTables($data);
+                ->setupDataTables(data: $data);
         }
     }
 
@@ -128,7 +129,7 @@ class AuditorController extends BaseController
      */
     public function migrationIndexView(): View
     {
-        return view('auditor::migration.index');
+        return view(view: 'auditor::migration.index');
     }
 
     /**
@@ -142,8 +143,8 @@ class AuditorController extends BaseController
             $data = \Illuminate\Support\Facades\DB::table('migrations')->orderBy('id', 'desc')->get();
 
             return (new DataTableService())
-                ->setupDataTables($data, [
-                    'view' => route('auditor.migration.detail', 'key'),
+                ->setupDataTables(data: $data, actionUrl: [
+                    'view' => route(name: 'auditor.migration.detail', parameters: 'key'),
                     'viewKey' => 'migration'
                 ]);
         }
@@ -159,7 +160,7 @@ class AuditorController extends BaseController
         $migrationPath = "./database/migrations/$migrationName";
         $migrationDetail = $this->accessMigrationData($migrationName.'.php');
 
-        return view('auditor::migration.detail', compact('migrationName', 'migrationDetail', 'migrationPath'));
+        return view(view: 'auditor::migration.detail', data: compact('migrationName', 'migrationDetail', 'migrationPath'));
     }
 
     /**
@@ -167,7 +168,7 @@ class AuditorController extends BaseController
      */
     public function routeIndexView(): View
     {
-        return view('auditor::route.index');
+        return view(view: 'auditor::route.index');
     }
 
     /**

@@ -23,6 +23,6 @@ class DataTable extends Component
 
     public function render()
     {
-        return view('auditor::components.data-table');
+        return view(view: 'auditor::components.data-table');
     }
 }
