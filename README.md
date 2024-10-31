@@ -12,7 +12,7 @@ By using Laravel Auditing, you can enhance the transparency and reliability of y
 - Keeping track of user actions
 - Keeping track of what the user sees
 - Keeping track of system changes
-- Keeping track of databases 
+- Keeping track of databases
 
 ## When to use Laravel Auditor ?
 - Keeping track of user actions (responsibility)
@@ -136,13 +136,18 @@ use Rembon\LaravelAuditor\Traits\Auditable;
 class User extends Authenticatable
 {
     use ..., Auditable;
-    
+
     ...
 }
 
 ```
 
 Check the view on: `/auditor`
+
+## System Requirements
+- PHP >= 8.0
+- Laravel <= 9.*
+- Mysql & PostgreSQL Supported
 
 ## Credits
 - [Rembon Karya Digital](https://github.com/rembonnn)

@@ -31,7 +31,7 @@ return [
     | This setting allows customization of model names to match user
     | preferences and project requirements.
     */
-    'user_model' => 'App\\Models\\User',
+    'user_model' => \App\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------
