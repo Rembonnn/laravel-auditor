@@ -74,20 +74,23 @@ class AuditorController extends BaseController
      * @param Request $request
      * @return JsonResponse
      */
-    public function monitoringIndexData(Request $request): JsonResponse
+    public function monitoringIndexData(Request $request)
     {
-        if ($request->ajax()) {
+        $customableField = [
+            ['field' => 'request_time', 'format' => fn ($time) => sprintf("%.2f", $time).'s']
+        ];
 
-            $customableField = [
-                ['field' => 'request_time', 'format' => fn ($time) => sprintf("%.2f", $time).'s']
-            ];
+        $monitoringData = Audit::orderBy('created_at', 'desc')
+            ->when($request->has('d'), function ($query) use ($request) {
+                return $query->whereDay('created_at', $request->get('d'));
+            })
+            ->get();
 
-            return (new DataTableService())
-                ->setCustomableField($customableField)
-                ->setupDataTables(Audit::orderBy('created_at', 'desc')->get(), [
-                    'view' => route('auditor.monitoring.detail', 'key')
-                ]);
-        }
+        return (new DataTableService())
+            ->setCustomableField($customableField)
+            ->setupDataTables($monitoringData, [
+                'view' => route('auditor.monitoring.detail', 'key')
+            ]);
     }
 
     /**
