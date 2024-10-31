@@ -1,5 +1,7 @@
 @extends('auditor::layout.base')
 
+@section('title', 'Auditor - Migration Detail')
+
 @section('content')
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow">
         <div class="flex justify-between">

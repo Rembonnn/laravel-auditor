@@ -1,5 +1,7 @@
 @extends('auditor::layout.base')
 
+@section('title', 'Auditor - Monitoring')
+
 @section('content')
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow">
         <h5 class="mb-5 text-2xl font-semibold tracking-tight text-gray-700">Monitoring</h5>
