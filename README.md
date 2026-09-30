@@ -1,4 +1,10 @@
 # Laravel Auditor
+
+> [!WARNING]
+> **Version 2.x is deprecated.** It only receives security fixes. Version 3 is a rewrite
+> that fixes known security issues of 2.x: the dashboard was open to everyone, and raw emails
+> and password hashes were stored. See the [upgrade guide](https://github.com/Rembonnn/laravel-auditor/blob/main/UPGRADE.md).
+> Report vulnerabilities as described in [SECURITY.md](https://github.com/Rembonnn/laravel-auditor/blob/main/SECURITY.md).
 The Laravel Auditing package is a comprehensive auditing solution for Laravel applications. It provides a way to track changes made to your models, enabling you to maintain a detailed record of data modifications
 
 ## What is Laravel Auditor
