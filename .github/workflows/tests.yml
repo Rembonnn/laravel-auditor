@@ -103,7 +103,7 @@ jobs:
       - run: composer update --prefer-dist --no-interaction
       - run: npm ci && npx playwright install --with-deps chromium
       - run: composer test:browser
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: browser-screenshots
