@@ -68,7 +68,7 @@
         "test": "pest --parallel",
         "test:coverage": "pest --coverage --min=90",
         "test:mutate": "pest --mutate --min=80",
-        "test:browser": "pest --group=browser",
+        "test:browser": "pest --testsuite=Browser --group=browser",
         "analyse": "phpstan analyse --memory-limit=1G",
         "format": "pint",
         "refactor": "rector",

@@ -4,12 +4,20 @@
          bootstrap="vendor/autoload.php"
          colors="true"
          cacheDirectory=".phpunit.cache"
+         defaultTestSuite="Default"
          executionOrder="random"
          failOnWarning="true"
          failOnRisky="true"
          failOnEmptyTestSuite="true"
          beStrictAboutOutputDuringTests="true">
     <testsuites>
+        <!-- Everything except Browser: the Pest browser plugin needs Playwright as soon as a browser test is loaded. -->
+        <testsuite name="Default">
+            <directory>tests/Unit</directory>
+            <directory>tests/Feature</directory>
+            <file>tests/ArchTest.php</file>
+            <directory>tests/Benchmark</directory>
+        </testsuite>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
