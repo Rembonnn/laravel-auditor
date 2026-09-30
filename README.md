@@ -161,6 +161,7 @@ model changes.
 
 ## Documentation
 
+- **[Documentation site](https://rembonnn.github.io/laravel-auditor/)**
 - [Upgrade from v2](UPGRADE.md)
 - [Configuration reference](config/auditor.php)
 - [Changelog](CHANGELOG.md)
