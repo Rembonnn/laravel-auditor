@@ -1,14 +1,18 @@
 {
     "name": "rembon/laravel-auditor",
-    "description": "Laravel Eloquent Model Auditor Without Getting Sweat",
+    "description": "Request-level audit trail for Laravel: who did what, what changed, and what they were allowed to do.",
+    "keywords": [
+        "laravel",
+        "audit",
+        "audit-trail",
+        "auditing",
+        "activity-log",
+        "compliance",
+        "security"
+    ],
+    "homepage": "https://github.com/Rembonnn/laravel-auditor",
     "type": "library",
     "license": "MIT",
-    "version": "v2.0.0",
-    "autoload": {
-        "psr-4": {
-            "Rembon\\LaravelAuditor\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "dayCod",
@@ -19,15 +23,76 @@
             "email": "adeyusuf005@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "yajra/laravel-datatables-oracle": "^10.3.1"
+        "php": "^8.3",
+        "illuminate/auth": "^12.0|^13.0",
+        "illuminate/console": "^12.0|^13.0",
+        "illuminate/contracts": "^12.0|^13.0",
+        "illuminate/database": "^12.0|^13.0",
+        "illuminate/http": "^12.0|^13.0",
+        "illuminate/log": "^12.0|^13.0",
+        "illuminate/queue": "^12.0|^13.0",
+        "illuminate/routing": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
+        "illuminate/view": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "driftingly/rector-laravel": "^2.0",
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-arch": "^4.0",
+        "pestphp/pest-plugin-browser": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "rector/rector": "^2.0"
+    },
+    "suggest": {
+        "rembon/laravel-auditor-filament": "Filament panel for browsing audit entries",
+        "rembon/laravel-auditor-pulse": "Laravel Pulse cards for audit activity"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rembon\\LaravelAuditor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rembon\\LaravelAuditor\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "scripts": {
+        "test": "pest --parallel",
+        "test:coverage": "pest --coverage --min=90",
+        "test:mutate": "pest --mutate --min=80",
+        "test:browser": "pest --group=browser",
+        "analyse": "phpstan analyse --memory-limit=1G",
+        "format": "pint",
+        "refactor": "rector",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php vendor/bin/testbench workbench:build --ansi",
+            "@php vendor/bin/testbench serve --ansi"
+        ]
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Rembon\\LaravelAuditor\\LaravelAuditorServiceProvider"
-            ]
+                "Rembon\\LaravelAuditor\\AuditorServiceProvider"
+            ],
+            "aliases": {
+                "Auditor": "Rembon\\LaravelAuditor\\Facades\\Auditor"
+            }
         }
-    }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "prefer-stable": true
 }

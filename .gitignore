@@ -1,0 +1,14 @@
+vendor/
+node_modules/
+composer.lock
+.phpunit.result.cache
+.phpunit.cache/
+build/
+coverage/
+.php-cs-fixer.cache
+.idea/
+.vscode/
+.DS_Store
+workbench/database/database.sqlite
+tests/Browser/Screenshots/*-actual.png
+tests/Browser/Screenshots/*-diff.png

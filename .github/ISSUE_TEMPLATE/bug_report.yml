@@ -1,0 +1,29 @@
+name: Bug report
+description: Something does not work as documented.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security issue? Do **not** open an issue — see SECURITY.md.
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Laravel Auditor, Laravel, PHP and database versions.
+      placeholder: laravel-auditor 3.0.0, Laravel 13.2, PHP 8.4, MySQL 8.4
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The smallest code or config that shows the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs. actual behaviour
+    validations:
+      required: true

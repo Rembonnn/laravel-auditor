@@ -1,0 +1,18 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - config
+        - database
+        - routes
+        - tests/Fixtures
+    tmpDir: build/phpstan
+    treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # A package config file legitimately reads env(); Larastan only knows the app's config dir.
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            path: config/auditor.php

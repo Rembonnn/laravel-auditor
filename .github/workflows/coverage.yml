@@ -1,0 +1,41 @@
+name: coverage
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_sqlite
+          coverage: pcov
+      - run: composer update --prefer-dist --no-interaction
+      - run: vendor/bin/pest --coverage --min=90 --coverage-clover=coverage.xml
+      - uses: codecov/codecov-action@v4
+        with:
+          files: coverage.xml
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_sqlite
+          coverage: pcov
+      - run: composer update --prefer-dist --no-interaction
+      - name: Mutation testing (core)
+        # --path takes ONE comma-separated list; repeating it keeps only the last.
+        # src/Support/Dashboard (presentation helpers) is tracked separately.
+        run: >
+          vendor/bin/pest --mutate --min=80 --parallel
+          --path=src/Support/CanonicalJson.php,src/Support/CorrelationId.php,src/Support/IpAnonymizer.php,src/Support/PendingEntry.php,src/Support/Redactor.php,src/Support/Settings.php,src/Support/UserResolver.php,src/Support/Values.php,src/Recorder.php,src/Observers,src/Integrity,src/Http/Middleware
