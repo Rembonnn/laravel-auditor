@@ -1,156 +1,175 @@
 # Laravel Auditor
-The Laravel Auditing package is a comprehensive auditing solution for Laravel applications. It provides a way to track changes made to your models, enabling you to maintain a detailed record of data modifications
 
-## What is Laravel Auditor
-The Laravel Auditing package is designed to seamlessly integrate with your Laravel application, offering a robust and flexible solution for auditing your Eloquent models. It records every change made to your models, storing the old and new values of attributes, the user responsible for the changes, and timestamps. This allows you to maintain a detailed audit trail and ensures data integrity and accountability.
+[![tests](https://github.com/Rembonnn/laravel-auditor/actions/workflows/tests.yml/badge.svg)](https://github.com/Rembonnn/laravel-auditor/actions/workflows/tests.yml)
+[![coverage](https://codecov.io/gh/Rembonnn/laravel-auditor/branch/main/graph/badge.svg)](https://codecov.io/gh/Rembonnn/laravel-auditor)
+[![Packagist](https://img.shields.io/packagist/v/rembon/laravel-auditor.svg)](https://packagist.org/packages/rembon/laravel-auditor)
+[![Downloads](https://img.shields.io/packagist/dt/rembon/laravel-auditor.svg)](https://packagist.org/packages/rembon/laravel-auditor)
+![PHP 8.3+](https://img.shields.io/badge/php-8.3%2B-777bb4)
+![Laravel 12–13](https://img.shields.io/badge/laravel-12%20%7C%2013-ff2d20)
 
-The package is highly customizable, enabling you to define which models and attributes should be audited, specify the storage location for audit logs, and configure how audits are queried and displayed. Additionally, it supports broadcasting audit events, which can be useful for triggering real-time notifications or other actions in response to data changes.
+**Request-level audit trail for Laravel — who did what, what changed, and what they were allowed to do. Production-safe and compliance-ready.**
 
-By using Laravel Auditing, you can enhance the transparency and reliability of your application, making it easier to debug issues, understand user actions, and maintain compliance with regulatory requirements.
+<!-- Screenshots: add docs/screenshots/{light,dark}.png before release.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark.png">
+  <img alt="Laravel Auditor dashboard" src="docs/screenshots/light.png">
+</picture>
+-->
 
-## Key Features
-- Keeping track of user actions
-- Keeping track of what the user sees
-- Keeping track of system changes
-- Keeping track of databases
+## Why Laravel Auditor?
 
-## When to use Laravel Auditor ?
-- Keeping track of user actions (responsibility)
-- Third party integrations (request and response)
-- Discover malicious activities in your applications
-- Debugging purposes
+Every HTTP request, queued job and artisan command becomes one **entry**: the user, the
+route, the status, the abilities that were checked (granted or denied), the records that
+were read, the mails and notifications that went out — and a diff of every model it changed.
 
-## How to Install
+| | Laravel Auditor v3 | spatie/laravel-activitylog | owen-it/laravel-auditing | Laravel Telescope |
+|---|---|---|---|---|
+| Unit of recording | **Request / job / command** | Manual event / model | Model event | Debug entry |
+| Model change diff | ✅ | ✅ | ✅ | ⚠️ (debug) |
+| Models read (read audit) | ✅ | ❌ | ⚠️ (retrieved) | ⚠️ |
+| Abilities checked (granted/denied) | ✅ | ❌ | ❌ | ✅ (debug) |
+| Mail & notifications sent | ✅ (no body) | ❌ | ❌ | ✅ (debug) |
+| Correlation request → queued job | ✅ | ❌ | ❌ | ⚠️ (batch id) |
+| Tamper-evident (hash chain) | ✅ | ❌ | ❌ | ❌ |
+| Built for production | ✅ | ✅ | ✅ | ⚠️ (not recommended) |
 
-### Step 1: Install the Package via Composer
-Run the following command in your terminal to install the package:
+## Installation
 
-```sh
+```bash
 composer require rembon/laravel-auditor
+php artisan auditor:install
 ```
 
-### Step 2: Register the Service Provider
-Once the package is successfully installed, you need to register the service provider and publish the assets. Add the service provider to the providers array in `config/app.php`:
+`auditor:install` publishes the config and migrations, offers to migrate, and prints the
+snippets below. Add `--integrity` to enable the hash chain.
+
+## Quick start
+
+Record the changes of a model:
 
 ```php
-'providers' => [
-    /*
-    * Laravel Framework Service Providers...
-    */
-    ...
-
-    /*
-    * Package Service Providers...
-    */
-    \Rembon\LaravelAuditor\LaravelAuditorServiceProvider::class,
-
-    /*
-    * Application Service Providers...
-    */
-    ...
-],
-```
-
-Use these library on top of your Event Service Provider Files `app/Providers/EventServiceProvider.php`:
-```php
-<?php
-
-...
-use Illuminate\Mail\Events\MessageSent;
-use Illuminate\Notifications\Events\NotificationSent;
-use Rembon\LaravelAuditor\Listeners\AuthorizeMail;
-use Rembon\LaravelAuditor\Listeners\AuthorizeNotification;
-```
-
-Then replace these code into `app/Providers/EventServiceProvider.php`
-```php
-protected $listen = [
-    ...
-    MessageSent::class => [
-        AuthorizeMail::class,
-    ],
-    NotificationSent::class => [
-        AuthorizeNotification::class,
-    ],
-];
-```
-
-### Step 3: Publish the Configuration Files
-Run the following Artisan commands to publish the package configuration:
-
-```sh
-php artisan vendor:publish --tag=config
-php artisan vendor:publish --tag=migrations
-php artisan vendor:publish --tag=public
-php artisan vendor:publish --tag=views
-```
-
-### Step 4: Running the Migration Files
-then run the migration:
-```sh
-php artisan migrate
-```
-
-if you want to migrate the specific migration, run migration below:
-```sh
-php artisan migrate --path=database/migrations/2050_06_14_042948_create_audits_table.php
-```
-and
-```sh
-php artisan migrate --path=database/migrations/2050_07_13_093233_create_performances_table.php
-```
-
-### Step 5: `Optional` Commands
-Lastly, run the following optional commands:
-
-```sh
-composer dump-autoload
-```
-
-if you are using uuid, just check these file `..._create_audits_table.php` below:
-```php
-Schema::create('audits', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('user_id')->nullable(); // modify this line into foreignUuid method, do not change the column name
-    $table->string('url');
-    $table->dateTime('datetime');
-    $table->double('request_time');
-    $table->string('route')->nullable();
-    $table->json('abilities')->nullable();
-    $table->json('emails')->nullable();
-    $table->json('models')->nullable();
-    $table->json('notifications')->nullable();
-    $table->json('properties')->nullable();
-    $table->timestamps();
-});
-```
-
-## How to Use ?
-Simple, Just put our Auditable Traits into your models
-
-```php
-<?php
-
 use Rembon\LaravelAuditor\Traits\Auditable;
 
-class User extends Authenticatable
+class Post extends Model
 {
-    use ..., Auditable;
+    use Auditable;
 
-    ...
+    // Optional
+    protected array $auditExclude = ['view_count'];
+    protected array $auditEvents = ['updated', 'deleted'];
+    protected bool $auditRetrieved = false;
 }
-
 ```
 
-Check the view on: `/auditor`
+Allow access to the dashboard outside `local` (it is **closed** by default):
 
-## System Requirements
-- PHP >= 8.0
-- Laravel <= 9.*
-- Mysql & PostgreSQL Supported
+```php
+// AppServiceProvider::boot()
+Gate::define('viewAuditor', fn (User $user) => $user->is_admin);
+```
+
+Schedule the maintenance commands:
+
+```php
+// routes/console.php
+Schedule::command('auditor:prune')->daily();
+Schedule::command('auditor:seal')->everyMinute()->withoutOverlapping(); // with integrity
+Schedule::command('auditor:verify')->daily();                          // with integrity
+```
+
+Then open **`/auditor`**.
+
+## Usage
+
+```php
+use Rembon\LaravelAuditor\Facades\Auditor;
+
+// Enrich the current entry
+Auditor::withProperty('order_id', $order->id);
+Auditor::withProperties(['channel' => 'mobile']);
+Auditor::tag('checkout', 'payment');
+
+// Control recording
+Auditor::ignore();                                 // drop this entry (model changes are kept)
+Auditor::withoutAuditing(fn () => $post->save());  // nothing inside is recorded
+Auditor::correlationId();                          // shared with the jobs it dispatches
+
+// Customise (in a service provider)
+Auditor::auth(fn (Request $request) => $request->user()?->isAdmin());
+Auditor::resolveUserUsing(fn () => auth('admin')->user());
+Auditor::filter(fn (EntryData $entry) => $entry->name !== 'health.check');
+Auditor::redactUsing(fn (string $key, mixed $value) => $key === 'nik');
+Auditor::extend('s3', fn (Application $app) => new S3Storage(/* ... */));
+Auditor::displayUserUsing(fn ($user) => ['name' => $user->name, 'avatar' => $user->avatar_url]);
+```
+
+Query the trail:
+
+```php
+$post->audits;                                              // newest first
+ModelChange::query()->causedBy($user)->since(now()->subWeek())->get();
+Entry::query()->forCorrelation($id)->get();                 // request + its jobs
+Entry::query()->withDeniedAbilities()->get();
+```
+
+### Testing your application
+
+```php
+Auditor::fake();
+
+$this->actingAs($user)->put("/posts/{$post->id}", ['title' => 'New']);
+
+Auditor::assertChangeRecorded(Post::class, $post->id, ChangeEvent::Updated,
+    fn (ModelChangeData $change) => $change->newValues['title'] === 'New');
+Auditor::assertEntryRecorded(fn (EntryData $e) => $e->userId === (string) $user->id);
+Auditor::assertAbilityDenied('delete-post');
+Auditor::assertNothingRecorded();
+```
+
+## Privacy & safety defaults
+
+- Keys such as `password`, `*token*`, `*secret*`, `authorization`, card numbers, `$hidden`
+  attributes and encrypted casts are replaced with `[REDACTED]` — in model diffs, input,
+  properties and URL query strings.
+- Mail bodies are never stored; recipients can be hashed (`mail.hash_recipients`).
+- IPs can be anonymised (`http.capture.anonymize_ip`), request input is off by default.
+- Recording never breaks your app: failures are reported, not thrown
+  (`AUDITOR_THROW=true` in tests).
+- Entries are written after the response is sent, or through the queue (`AUDITOR_QUEUE`).
+- Integrity: rows are chained with HMAC-SHA256; `auditor:verify` detects modified and
+  removed rows. It cannot protect against someone who holds both the key and the database.
+
+## Limitations
+
+Mass updates/deletes through the query builder, `insert()`, and pivot `attach()/detach()`
+without a custom pivot model do not fire Eloquent events, so they are not recorded as
+model changes.
+
+## Documentation
+
+- [Upgrade from v2](UPGRADE.md)
+- [Configuration reference](config/auditor.php)
+- [Changelog](CHANGELOG.md)
+
+## Development
+
+```bash
+composer test            # unit + feature
+composer test:browser    # dashboard in a real browser (needs `npx playwright install chromium`)
+composer analyse         # Larastan
+composer serve           # workbench with demo data at http://localhost:8000/auditor
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Report vulnerabilities privately — see [SECURITY.md](SECURITY.md).
 
 ## Credits
+
 - [Rembon Karya Digital](https://github.com/rembonnn)
 - [DayCod](https://github.com/dayCod)
 - [Ade Yusuf](https://github.com/adeyusuf211)
-- [See All Contributors](https://github.com/rembonnn/laravel-auditor/contributors)
+- [All contributors](https://github.com/rembonnn/laravel-auditor/contributors)
+- Icons: [Lucide](https://lucide.dev) (ISC)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
