@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "size": "node scripts/check-size.js"
+  },
+  "devDependencies": {
+    "@alpinejs/csp": "^3.17.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "axe-core": "^4.10.0",
+    "playwright": "^1.50.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.1"
+  }
+}

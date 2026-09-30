@@ -1,0 +1,17 @@
+{
+  "resources/css/auditor.css": {
+    "file": "styles-VyH71T2H.css",
+    "name": "styles",
+    "names": [
+      "styles.css"
+    ],
+    "src": "resources/css/auditor.css",
+    "isEntry": true
+  },
+  "resources/js/auditor.js": {
+    "file": "auditor-B5sah3yD.js",
+    "name": "auditor",
+    "src": "resources/js/auditor.js",
+    "isEntry": true
+  }
+}

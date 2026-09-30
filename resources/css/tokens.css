@@ -1,0 +1,71 @@
+/*
+ * Design tokens (plan §10.3). Light text colours use the 700 shade where the
+ * 600 shade would fall below WCAG AA (4.5:1) on white.
+ */
+:root {
+    color-scheme: light;
+
+    --bg: #fafafa;              /* zinc-50 */
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --surface-sunken: #f4f4f5;  /* zinc-100 */
+    --border: #e4e4e7;          /* zinc-200 */
+    --border-strong: #d4d4d8;   /* zinc-300 */
+    --text: #18181b;            /* zinc-900 */
+    --text-muted: #52525b;      /* zinc-600: 7.7:1 on white, 7.3:1 on zinc-50 */
+    --text-subtle: #71717a;     /* zinc-500: 4.8:1 */
+
+    --accent: #047857;          /* emerald-700 */
+    --accent-contrast: #ffffff;
+    --success: #047857;         /* emerald-700 */
+    --warning: #b45309;         /* amber-700 */
+    --danger: #be123c;          /* rose-700 */
+    --info: #0369a1;            /* sky-700 */
+    --neutral: #52525b;
+
+    --success-bg: #ecfdf5;
+    --warning-bg: #fffbeb;
+    --danger-bg: #fff1f2;
+    --info-bg: #f0f9ff;
+    --neutral-bg: #f4f4f5;
+
+    --diff-add-bg: #ecfdf5;     /* emerald-50 */
+    --diff-del-bg: #fff1f2;     /* rose-50 */
+
+    --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 16px rgb(0 0 0 / 0.08);
+    --overlay: rgb(9 9 11 / 0.4);
+}
+
+.dark {
+    color-scheme: dark;
+
+    --bg: #09090b;              /* zinc-950 */
+    --surface: #18181b;         /* zinc-900 */
+    --surface-raised: #27272a;  /* zinc-800 */
+    --surface-sunken: #111113;
+    --border: #27272a;          /* zinc-800 */
+    --border-strong: #3f3f46;   /* zinc-700 */
+    --text: #f4f4f5;            /* zinc-100 */
+    --text-muted: #a1a1aa;      /* zinc-400 */
+    --text-subtle: #a1a1aa;
+
+    --accent: #34d399;          /* emerald-400 */
+    --accent-contrast: #022c22;
+    --success: #34d399;
+    --warning: #fbbf24;         /* amber-400 */
+    --danger: #fb7185;          /* rose-400 */
+    --info: #38bdf8;            /* sky-400 */
+    --neutral: #a1a1aa;
+
+    --success-bg: rgb(16 185 129 / 0.15);
+    --warning-bg: rgb(245 158 11 / 0.15);
+    --danger-bg: rgb(244 63 94 / 0.15);
+    --info-bg: rgb(14 165 233 / 0.15);
+    --neutral-bg: rgb(161 161 170 / 0.15);
+
+    --diff-add-bg: rgb(16 185 129 / 0.15);
+    --diff-del-bg: rgb(244 63 94 / 0.15);
+
+    --shadow-raised: none;
+    --overlay: rgb(0 0 0 / 0.6);
+}
