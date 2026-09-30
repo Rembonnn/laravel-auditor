@@ -17,6 +17,11 @@ class WorkbenchServiceProvider extends ServiceProvider
             'auth.providers.users.model' => User::class,
             'app.name' => 'Acme',
         ]);
+
+        // Building the workbench (migrate, seed, ...) is not part of the demo.
+        $this->app->booted(fn () => config(['auditor.console.except' => [
+            ...(array) config('auditor.console.except'), 'workbench:*', 'migrate*', 'db:*',
+        ]]));
     }
 
     public function boot(): void

@@ -9,12 +9,19 @@
 
 **Request-level audit trail for Laravel — who did what, what changed, and what they were allowed to do. Production-safe and compliance-ready.**
 
-<!-- Screenshots: add docs/screenshots/{light,dark}.png before release.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark.png">
-  <img alt="Laravel Auditor dashboard" src="docs/screenshots/light.png">
+  <img alt="Laravel Auditor dashboard overview" src="docs/screenshots/light.png">
 </picture>
--->
+
+<details>
+<summary>More screenshots</summary>
+
+| Entries | Entry detail with diff | Mobile |
+|---|---|---|
+| <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/entries-dark.png"><img alt="Entries list" src="docs/screenshots/entries-light.png"></picture> | <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/entry-dark.png"><img alt="Entry detail showing a model diff" src="docs/screenshots/entry-light.png"></picture> | <img alt="Entries on a phone" src="docs/screenshots/mobile.png" width="260"> |
+
+</details>
 
 ## Why Laravel Auditor?
 
@@ -144,6 +151,13 @@ Auditor::assertNothingRecorded();
 Mass updates/deletes through the query builder, `insert()`, and pivot `attach()/detach()`
 without a custom pivot model do not fire Eloquent events, so they are not recorded as
 model changes.
+
+## Ecosystem
+
+- [**rembon/laravel-auditor-filament**](https://github.com/Rembonnn/laravel-auditor-filament): Filament 5 plugin with read-only
+  Audit entries and Model changes resources, an `AuditsRelationManager` for any resource, and a stats widget.
+- [**rembon/laravel-auditor-pulse**](https://github.com/Rembonnn/laravel-auditor-pulse): Laravel Pulse cards for denied
+  abilities, top model changes and the most active users.
 
 ## Documentation
 
